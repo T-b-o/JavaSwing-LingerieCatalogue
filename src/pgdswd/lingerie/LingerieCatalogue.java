@@ -1,8 +1,12 @@
 package pgdswd.lingerie;
 
+import java.awt.image.BufferedImage;
 import javax.swing.ImageIcon;
 import java.net.URL; 
 import java.io.IOException;
+import javax.swing.JLabel;
+import javax.swing.JOptionPane;
+import static javax.swing.JOptionPane.showConfirmDialog;
 
 
 /**
@@ -18,12 +22,17 @@ public class LingerieCatalogue extends javax.swing.JFrame {
             "004684.html", "004685.html", "004686.html", "004687.html",
             "004688.html", "004689.html", "004690.html" };
     int count;
+    
+    String s = "Teboho Alfred Matjele\n\nmatjele7@gmail.com\nteboho.matjele@younglings.africa"
+            + "\n\n\nthe Developer of this lingerie system\n_____________________________\n| This is not a porn system |"
+            + "\n''''''''''''''''''''''''''''''''''''''''''''''''''''''''''";
       
     /**
      * Creates new form LingerieCatalogue
      */
     public LingerieCatalogue() {
         initComponents();
+        jepCatalogueDetails.setText(s);
     }
 
     /**
@@ -64,15 +73,17 @@ public class LingerieCatalogue extends javax.swing.JFrame {
 
         jpImageIcon.setBorder(javax.swing.BorderFactory.createTitledBorder("Catalogue Image"));
 
+        lblCatalogueImage.setIcon(new javax.swing.ImageIcon(getClass().getResource("/pgdswd/lingerie/images/GradImage.png"))); // NOI18N
+
         javax.swing.GroupLayout jpImageIconLayout = new javax.swing.GroupLayout(jpImageIcon);
         jpImageIcon.setLayout(jpImageIconLayout);
         jpImageIconLayout.setHorizontalGroup(
             jpImageIconLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(lblCatalogueImage, javax.swing.GroupLayout.DEFAULT_SIZE, 127, Short.MAX_VALUE)
+            .addComponent(lblCatalogueImage, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
         );
         jpImageIconLayout.setVerticalGroup(
             jpImageIconLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(lblCatalogueImage, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, 168, Short.MAX_VALUE)
+            .addComponent(lblCatalogueImage)
         );
 
         jPanel3.setBorder(javax.swing.BorderFactory.createEtchedBorder());
@@ -98,7 +109,7 @@ public class LingerieCatalogue extends javax.swing.JFrame {
             .addGroup(jPanel3Layout.createSequentialGroup()
                 .addContainerGap()
                 .addComponent(btnCatalogue)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 110, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 92, Short.MAX_VALUE)
                 .addComponent(btnExit)
                 .addContainerGap())
         );
@@ -133,7 +144,7 @@ public class LingerieCatalogue extends javax.swing.JFrame {
                     .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addGroup(layout.createSequentialGroup()
                         .addComponent(jpImageIcon, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(0, 62, Short.MAX_VALUE)))
+                        .addGap(0, 106, Short.MAX_VALUE)))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(jPanel3, javax.swing.GroupLayout.PREFERRED_SIZE, 44, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(11, 11, 11))
@@ -142,12 +153,21 @@ public class LingerieCatalogue extends javax.swing.JFrame {
         pack();
     }// </editor-fold>//GEN-END:initComponents
     
-    private void btnCatalogueActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCatalogueActionPerformed
+    public void changeLingerie(){
         //images/lingerie_00 + list[count] + .png
         ImageIcon imgIcon = createImageIcon("images/" + imgFilesPath[count]);
         //html/00 + list[count] + .html
+        
+        BufferedImage bf = new BufferedImage(
+          imgIcon.getIconWidth(),
+          imgIcon.getIconHeight(),
+          BufferedImage.TYPE_INT_RGB);
+        
+        JLabel img = new JLabel(imgIcon);
+        
+        
         URL htlmUrl = createFileUrl("html/" + htmlFilesPath[count]);
-        if(imgIcon != null){
+        if(bf != null){
           try{
             lblCatalogueImage.setIcon(imgIcon);
             
@@ -169,17 +189,24 @@ public class LingerieCatalogue extends javax.swing.JFrame {
         }else{
             javax.swing.JOptionPane.showMessageDialog(null, "No image found", "Error", 0);
         }
+    }
+    
+    
+    private void btnCatalogueActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCatalogueActionPerformed
+        changeLingerie();
     }//GEN-LAST:event_btnCatalogueActionPerformed
 
     private void btnExitActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnExitActionPerformed
-        System.exit(0);
-       
+        if(showConfirmDialog(null, "Are you sure you want to close?", "Lingerie Systems Close", JOptionPane.YES_NO_OPTION) == JOptionPane.YES_OPTION){
+            System.exit(0);
+        }
+        
     }//GEN-LAST:event_btnExitActionPerformed
     
     /**
      * A function createImageIcon of the lingerie
      * @param path a string path to the lingerie icon
-     * @return the lingerie icon
+     * @return the lingerie image icon
      */
     private ImageIcon createImageIcon(String path)
     {
